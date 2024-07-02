@@ -2,6 +2,6 @@ streamlit
 pandas
 nltk
 scikit-learn
-catboost==1.2.5
+catboost==1.0.3
 seaborn
 matplotlib
