@@ -1,5 +1,7 @@
 streamlit
-matplotlib
-pytz
-nltk
 pandas
+nltk
+scikit-learn
+catboost
+seaborn
+matplotlib
