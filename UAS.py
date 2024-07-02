@@ -35,7 +35,6 @@ def tokenizer(text):
 
 df['Tokenizing'] = df['Cleaning'].apply(tokenizer)
 
-
 # Gabungkan kembali kata-kata setelah pembersihan dan penghapusan stopword
 df['Final_Text'] = df['Tokenizing'].apply(lambda x: ' '.join(x))
 
@@ -58,7 +57,8 @@ model.fit(X_train, y_train)
 def predict_category(text):
     text_cleaned = cleaning(text)
     text_tokenized = tokenizer(text_cleaned)
-    text_tfidf = vectorizer.transform([text_tokenized])
+    text_final = ' '.join(text_tokenized)
+    text_tfidf = vectorizer.transform([text_final])
     prediction = model.predict(text_tfidf)
     category = prediction[0]
     return category
@@ -86,9 +86,13 @@ st.write("Jumlah Kategori :")
 category_counts = df['kategori'].value_counts()
 st.bar_chart(category_counts)
 
+# Tampilkan hasil akurasi
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+st.write(f"Akurasi Model: {accuracy:.4f}")
+
 # Tampilkan Confusion Matrix
 st.write("Confusion Matrix:")
-y_pred = model.predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 fig, ax = plt.subplots(figsize=(10, 8))
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax)
